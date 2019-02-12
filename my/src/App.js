@@ -25,8 +25,9 @@ class App extends Component {
     deleteCharComponent = (charIndex) => {
         const chars = [...this.state.arrayOfText];
         chars.splice(charIndex,1);
+        chars.join('');
         this.setState({
-           arrayOfText:chars
+            arrayOfText:chars
         });
     }
 
@@ -38,6 +39,7 @@ class App extends Component {
                 {this.state.arrayOfText.map( (el, index) =>{
                     return <CharComponent
                         content={this.state.arrayOfText[index]}
+                        key={index}
                         click={() => this.deleteCharComponent(index)}
                     />
                 })}
@@ -45,10 +47,10 @@ class App extends Component {
         );
     return (
         <div className="App">
-            <ValidationComponent className='lengthOutput' changed= { (event) => this.textChangeHandler(event)} content={this.state.userOutput[0].value} length={this.state.userOutput[0].value.length}></ValidationComponent>
+            <ValidationComponent className='lengthOutput' changed= { (event) => this.textChangeHandler(event)} content={this.state.arrayOfText} length={this.state.userOutput[0].value.length}></ValidationComponent>
 
 
-            <input type='text' onChange={ (event) => this.textChangeHandler(event)}></input>
+            <input type='text' onChange={ (event) => this.textChangeHandler(event)} value={this.state.arrayOfText.join('')}></input>
             <p>{this.state.userOutput[0].value.length}</p>
 
             {charComponents}
